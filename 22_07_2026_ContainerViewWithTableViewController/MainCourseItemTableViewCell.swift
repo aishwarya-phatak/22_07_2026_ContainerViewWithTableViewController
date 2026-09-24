@@ -8,10 +8,14 @@
 import UIKit
 
 class MainCourseItemTableViewCell: UITableViewCell {
-
+    
+    @IBOutlet weak var mainCourseItemNameLabel: UILabel!
+    @IBOutlet weak var mainCourseItemDescriptionLabel: UILabel!
+    @IBOutlet weak var mainCourseItemPriceLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

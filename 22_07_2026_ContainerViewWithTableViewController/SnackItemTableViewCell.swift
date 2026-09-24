@@ -8,16 +8,20 @@
 import UIKit
 
 class SnackItemTableViewCell: UITableViewCell {
-
+    
+    @IBOutlet weak var snackItemNameLabel: UILabel!
+    @IBOutlet weak var snackItemDescriptionLabel: UILabel!
+    @IBOutlet weak var snackItemPriceLabel: UILabel!
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
-        // Configure the view for the selected state
+        
     }
     
 }

@@ -9,13 +9,25 @@ import UIKit
 
 class MainCourseItemsTableViewController: UITableViewController {
     
-    var mainCourseItems = ["Pavbhaji","Navratan Kurma","Chilly Milly","Chole Bhatura","Pulav"]
-    let reuseIdentifierForMainCourseItemCell = "MainCourseItemBasicCell"
+    var mainCourseItems : [MainCourseItem] = [
+                           MainCourseItem(itemName: "Pavbhaji", itemDescription: "Yummy & Tasty", itemPrice: 120.00),
+                           MainCourseItem(itemName: "Navratan Kurma", itemDescription: "Yummy & Tasty", itemPrice: 240.00),
+                           MainCourseItem(itemName: "Chole Bhature", itemDescription: "Yummy & Tasty", itemPrice: 150.00),
+                           MainCourseItem(itemName: "Pulav", itemDescription: "Yummy & Tasty", itemPrice: 180.00),
+                           MainCourseItem(itemName: "Biryani", itemDescription: "Yummy & Tasty", itemPrice: 240.00)
+    ]
+    let reuseIdentifierForMainCourseItemCell = "MainCourseItemTableViewCell"
     let reuseIdentifierForMainCourseItemDetailsViewCOntroller = "MainCourseItemDetailsViewController"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         print("view did load for main course table view controller")
+        registerCellWithTableView()
+    }
+    
+    func registerCellWithTableView(){
+        let uinib = UINib(nibName: reuseIdentifierForMainCourseItemCell, bundle: nil)
+        self.tableView.register(uinib, forCellReuseIdentifier: reuseIdentifierForMainCourseItemCell)
     }
 
     // MARK: - Table view data source
@@ -32,18 +44,24 @@ class MainCourseItemsTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForMainCourseItemCell, for: indexPath)
+        let mainCourseItemTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForMainCourseItemCell, for: indexPath) as? MainCourseItemTableViewCell
 
-        cell.textLabel?.text = mainCourseItems[indexPath.row]
-
-        return cell
+        mainCourseItemTableViewCell?.mainCourseItemNameLabel.text = mainCourseItems[indexPath.row].itemName
+        mainCourseItemTableViewCell?.mainCourseItemDescriptionLabel.text = mainCourseItems[indexPath.row].itemDescription
+        mainCourseItemTableViewCell?.mainCourseItemPriceLabel.text = "\(mainCourseItems[indexPath.row].itemPrice)"
+        
+        return mainCourseItemTableViewCell ?? UITableViewCell()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var mainCourseItemDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: reuseIdentifierForMainCourseItemDetailsViewCOntroller) as? MainCourseItemDetailsViewController
         
-        mainCourseItemDetailsViewController?.mainCourseItemContainer = mainCourseItems[indexPath.row]
+//        mainCourseItemDetailsViewController?.mainCourseItemContainer = mainCourseItems[indexPath.row]
         self.navigationController?.pushViewController(mainCourseItemDetailsViewController!, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 125.0
     }
 
     /*

@@ -9,13 +9,26 @@ import UIKit
 
 class SnackItemsTableViewController: UITableViewController {
     
-    var snackItems = ["Samosa","Kachori","Dhokla","Vag puff","Vadapav"]
-    let reuseIdentifierForSnackItemCell = "SnackItemBasicCell"
+    var snackItems = [
+        SnackItem(itemName: "Samosa", itemDescription: "Tasty", itemPrice: 25.0),
+        SnackItem(itemName: "Kachori", itemDescription: "Tasty", itemPrice: 25.0),
+        SnackItem(itemName: "Dhokla", itemDescription: "Delicious", itemPrice: 45.0),
+        SnackItem(itemName: "Vag puff", itemDescription: "Crispy", itemPrice: 30.0),
+        SnackItem(itemName: "Vadapav", itemDescription: "Tasty", itemPrice: 20.0)
+    ]
+    
+    let reuseIdentifierForSnackItemCell = "SnackItemTableViewCell"
     let reuseIdentifierForSnackItemDetailsViewController = "SnackItemDetailsViewController"
 
     override func viewDidLoad() {
         super.viewDidLoad()
         print("view did load for sncak items table view controller")
+        registerCellWithTableView()
+    }
+    
+    func registerCellWithTableView(){
+        let uinib = UINib(nibName: reuseIdentifierForSnackItemCell, bundle: nil)
+        self.tableView.register(uinib, forCellReuseIdentifier: reuseIdentifierForSnackItemCell)
     }
 
     // MARK: - Table view data source
@@ -31,18 +44,24 @@ class SnackItemsTableViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = self.tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForSnackItemCell, for: indexPath)
+        let snackItemTableViewCell = self.tableView.dequeueReusableCell(withIdentifier: reuseIdentifierForSnackItemCell, for: indexPath) as? SnackItemTableViewCell
 
-        cell.textLabel?.text = snackItems[indexPath.row]
+        snackItemTableViewCell?.snackItemNameLabel.text = snackItems[indexPath.row].itemName
+        snackItemTableViewCell?.snackItemDescriptionLabel.text = snackItems[indexPath.row].itemDescription
+        snackItemTableViewCell?.snackItemPriceLabel.text = "\(snackItems[indexPath.row].itemPrice)"
 
-        return cell
+        return snackItemTableViewCell ?? UITableViewCell()
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         var snackItemDetailsViewController = self.storyboard?.instantiateViewController(withIdentifier: reuseIdentifierForSnackItemDetailsViewController) as? SnackItemDetailsViewController
         
-        snackItemDetailsViewController?.snackItemContainer = snackItems[indexPath.row]
+//        snackItemDetailsViewController?.snackItemContainer = snackItems[indexPath.row]
         self.navigationController?.pushViewController(snackItemDetailsViewController!, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 125.0
     }
 
     /*

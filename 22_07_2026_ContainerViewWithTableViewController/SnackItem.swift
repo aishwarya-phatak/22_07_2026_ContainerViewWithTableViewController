@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct SnackItem{
+    var itemName : String
+    var itemDescription : String
+    var itemPrice : Double
+}
